@@ -344,10 +344,33 @@
     }
   }, 80);
 
+  function scrollToHash(hash) {
+    const maxScroll = Math.max(0, section.offsetHeight - window.innerHeight);
+    const targets = {
+      "#reel": 0,
+      "#work": Math.min(maxScroll, 3320),
+      "#method": Math.min(maxScroll, 2400),
+      "#contact": maxScroll,
+      "#about": (document.querySelector("#about")?.offsetTop || maxScroll) + 1
+    };
+    const target = targets[hash];
+    if (target === undefined) return false;
+    history.replaceState(null, "", hash);
+    window.scrollTo({ top: target, behavior: reduceMotion.matches ? "auto" : "smooth" });
+    return true;
+  }
+
+  document.querySelectorAll('.site-nav a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (scrollToHash(link.getAttribute("href"))) event.preventDefault();
+    });
+  });
+
   window.addEventListener("load", () => {
     setupRail();
     watchPreviews();
     requestTick();
     startBackground();
+    if (location.hash) setTimeout(() => scrollToHash(location.hash), 80);
   });
 })();
