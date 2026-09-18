@@ -1317,3 +1317,121 @@ button {
   text-decoration: underline;
   text-underline-offset: 5px;
 }
+
+
+/* Complete works categorization and polish */
+.full-works-meta {
+  margin: 16px 0 0;
+  color: rgba(247, 241, 222, 0.58);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+}
+
+.work-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: min(1500px, 100%);
+  margin: 0 auto 32px;
+}
+
+.work-filter {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 17px;
+  border: 1px solid rgba(247, 241, 222, 0.24);
+  border-radius: 999px;
+  color: var(--paper);
+  background: rgba(255, 255, 255, 0.025);
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.work-filter span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.work-filter small {
+  color: rgba(247, 241, 222, 0.56);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+}
+
+.work-filter:hover {
+  border-color: rgba(216, 255, 67, 0.62);
+}
+
+.work-filter.is-active {
+  border-color: var(--acid);
+  color: var(--ink);
+  background: var(--acid);
+}
+
+.work-filter.is-active small {
+  color: rgba(16, 19, 14, 0.62);
+}
+
+.full-work-card[hidden] {
+  display: none !important;
+}
+
+.full-work-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
+}
+
+.full-works-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(1500px, 100%);
+  margin: 48px auto 0;
+  border-top: 1px solid rgba(247, 241, 222, 0.18);
+  padding-top: 26px;
+}
+
+.full-works-cta span {
+  color: rgba(247, 241, 222, 0.62);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+}
+
+.full-works-cta a {
+  color: var(--acid);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.full-works-cta a:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+@media (max-width: 640px) {
+  .work-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .work-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-filter {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 0 14px;
+  }
+
+  .full-works-cta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 34px;
+  }
+}

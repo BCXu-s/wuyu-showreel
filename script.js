@@ -321,15 +321,49 @@
 
   function primeVisiblePreviews() { if (!railCards.length) return; railCards.forEach((card) => { const rect = card.getBoundingClientRect(); const inView = rect.right > -80 && rect.left < window.innerWidth + 80 && rect.bottom > 0 && rect.top < window.innerHeight; const video = card.querySelector(".project-video"); if (!video) return; if (inView) { tryPlay(video); } else { pauseVideo(video); } }); }
 
+  const FULL_WORK_CATEGORIES = [
+    { key: "all", label: "全部", labelEn: "ALL" },
+    { key: "brand", label: "品牌商业", labelEn: "BRAND" },
+    { key: "story", label: "人物与地方", labelEn: "PEOPLE & LOCAL" },
+    { key: "outdoor", label: "户外美食", labelEn: "OUTDOOR & FOOD" },
+    { key: "event", label: "活动现场", labelEn: "EVENT & LIVE" },
+    { key: "auto", label: "汽车影像", labelEn: "AUTOMOTIVE" },
+    { key: "creative", label: "创意实验", labelEn: "CREATIVE" }
+  ];
+
   function renderFullWorks() {
     const works = Array.isArray(window.FULL_WORKS) ? window.FULL_WORKS : [];
     if (!works.length || !workDock) return;
+    const activeCategories = FULL_WORK_CATEGORIES.filter((category) => category.key === "all" || works.some((work) => work.category === category.key));
     const sectionEl = document.createElement("section");
     sectionEl.className = "work-page full-works";
     sectionEl.id = "full-works";
     sectionEl.setAttribute("aria-label", "Complete portfolio works");
-    sectionEl.innerHTML = '<div class="full-works-heading"><p class="dock-kicker">Full works / 完整作品</p><h2>完整故事，完整表达。<span class="headline-en">Complete stories, full cuts.</span></h2></div><div class="project-rail full-rail"></div>';
+    sectionEl.innerHTML = '<div class="full-works-heading"><p class="dock-kicker">Full works / 完整作品</p><h2>完整故事，完整表达。<span class="headline-en">Complete stories, full cuts.</span></h2><p class="full-works-meta">' + works.length + ' 个完整作品 · ' + (activeCategories.length - 1) + ' 个分类</p></div><div class="work-filters" role="group" aria-label="作品分类"></div><div class="project-rail full-rail"></div>';
+    const filters = sectionEl.querySelector(".work-filters");
     const fullRail = sectionEl.querySelector(".full-rail");
+
+    activeCategories.forEach((category) => {
+      const count = category.key === "all" ? works.length : works.filter((work) => work.category === category.key).length;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "work-filter" + (category.key === "all" ? " is-active" : "");
+      button.dataset.category = category.key;
+      button.setAttribute("aria-pressed", category.key === "all" ? "true" : "false");
+      button.innerHTML = "<span>" + category.label + "</span><small>" + category.labelEn + " · " + count + "</small>";
+      button.addEventListener("click", () => {
+        fullRail.querySelectorAll(".project-card").forEach((card) => {
+          card.hidden = category.key !== "all" && card.dataset.category !== category.key;
+        });
+        filters.querySelectorAll(".work-filter").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+      });
+      filters.append(button);
+    });
+
     works.forEach((work) => {
       const article = document.createElement("article");
       article.className = "project-card full-work-card";
@@ -340,10 +374,17 @@
       article.dataset.poster = work.poster || "";
       article.dataset.title = work.title || "";
       article.dataset.tag = work.tag || "Full work / 完整作品";
-      article.innerHTML = '<div class="project-media"><img class="full-poster" src="' + (work.poster || "") + '" alt="" loading="lazy" /><span class="project-play" aria-hidden="true"></span><span class="project-duration">' + (work.duration || "FULL") + '</span></div><div class="project-copy"><p class="project-tag">' + (work.tag || "Full work / 完整作品") + '</p><h3>' + (work.title || "Untitled") + '</h3><p>' + (work.description || "") + '<span class="card-en">' + (work.descriptionEn || "") + '</span></p></div>';
+      article.dataset.category = work.category || "other";
+      article.innerHTML = '<div class="project-media"><img class="full-poster" src="' + (work.poster || "") + '" alt="" loading="lazy" decoding="async" /><span class="project-play" aria-hidden="true"></span><span class="project-duration">' + (work.duration || "FULL") + '</span></div><div class="project-copy"><p class="project-tag">' + (work.tag || "Full work / 完整作品") + '</p><h3>' + (work.title || "Untitled") + '</h3><p>' + (work.description || "") + '<span class="card-en">' + (work.descriptionEn || "") + '</span></p></div>';
       fullRail.append(article);
     });
+
+    const cta = document.createElement("div");
+    cta.className = "full-works-cta";
+    cta.innerHTML = '<span>需要同类项目？ / NEED SIMILAR WORK?</span><a href="mailto:1608341441@qq.com">聊聊你的项目 / START A PROJECT</a>';
+    sectionEl.append(cta);
     workDock.insertAdjacentElement("afterend", sectionEl);
+
     sectionEl.addEventListener("click", (event) => {
       const card = event.target.closest(".project-card");
       if (card) openProject(card);
