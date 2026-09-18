@@ -1110,3 +1110,156 @@ button {
   font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: 800;
 }
+
+
+/* Standalone work index */
+.work-dock.work-page {
+  position: relative;
+  inset: auto;
+  z-index: 40;
+  min-height: 100vh;
+  padding: clamp(72px, 9vw, 130px) clamp(18px, 5vw, 80px) clamp(88px, 10vw, 140px);
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  background:
+    radial-gradient(circle at 92% 6%, rgba(255, 181, 60, 0.14), transparent 30%),
+    #090c09;
+}
+
+.work-page .dock-heading {
+  width: min(1500px, 100%);
+  margin-bottom: 42px;
+}
+
+.work-page .dock-heading h2 {
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+}
+
+.work-page .dock-note {
+  max-width: 340px;
+  color: rgba(247, 241, 222, 0.72);
+  font-size: 12px;
+}
+
+.work-page .project-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+  width: min(1500px, 100%);
+  margin: 0 auto;
+  padding: 0;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.work-page .project-card {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+}
+
+.work-page .project-media {
+  height: clamp(220px, 22vw, 310px);
+}
+
+.work-page .rail-controls {
+  display: none;
+}
+
+.floating-back {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid rgba(247, 241, 222, 0.3);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.34);
+  font-weight: 700;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+
+.floating-back.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dialog-back {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid rgba(247, 241, 222, 0.28);
+  border-radius: 999px;
+  color: var(--paper);
+  background: rgba(7, 9, 6, 0.78);
+  backdrop-filter: blur(10px);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dialog-back:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+@media (max-width: 1000px) {
+  .work-page .project-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .work-dock.work-page {
+    padding: 76px 16px 90px;
+  }
+
+  .work-page .dock-heading {
+    margin-bottom: 28px;
+  }
+
+  .work-page .project-rail {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .work-page .project-media {
+    height: 220px;
+  }
+
+  .floating-back {
+    right: 14px;
+    bottom: 14px;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .dialog-back {
+    top: 12px;
+    left: 12px;
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+}
+.profile-body .profile-skills {
+  margin-top: 6px;
+  border-left: 3px solid var(--amber);
+  padding-left: 16px;
+  font-weight: 600;
+}

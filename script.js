@@ -5,6 +5,7 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const rail = document.querySelector("#project-rail");
+  const workDock = document.querySelector(".work-dock");
   const originalCards = Array.from(document.querySelectorAll(".project-card"));
   const prevBtn = document.querySelector(".rail-prev");
   const nextBtn = document.querySelector(".rail-next");
@@ -14,9 +15,16 @@
   const dialogTitle = document.querySelector("#dialog-title");
   const dialogMeta = document.querySelector("#dialog-meta");
   const closeBtn = document.querySelector(".dialog-close");
+  const dialogBack = document.querySelector(".dialog-back");
   const chromeTime = document.querySelector("#chrome-time");
   const layerA = document.querySelector("#layer-a");
   const layerB = document.querySelector("#layer-b");
+
+  const floatingBack = document.createElement("button");
+  floatingBack.type = "button";
+  floatingBack.className = "floating-back";
+  floatingBack.textContent = "返回顶部 / TOP";
+  document.body.append(floatingBack);
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
   const smoothstep = (e0, e1, value) => {
@@ -168,12 +176,19 @@
     if (!rail) return;
     rail.replaceChildren();
 
-    for (let setIndex = 0; setIndex < 3; setIndex += 1) {
+    if (workDock && workDock.classList.contains("work-page")) {
       originalCards.forEach((card, index) => {
-        const clone = card.cloneNode(true);
-        clone.dataset.railIndex = String(setIndex * originalCount + index);
-        rail.append(clone);
+        card.dataset.railIndex = String(index);
+        rail.append(card);
       });
+    } else {
+      for (let setIndex = 0; setIndex < 3; setIndex += 1) {
+        originalCards.forEach((card, index) => {
+          const clone = card.cloneNode(true);
+          clone.dataset.railIndex = String(setIndex * originalCount + index);
+          rail.append(clone);
+        });
+      }
     }
 
     railCards = Array.from(rail.children);
@@ -191,13 +206,15 @@
     dialogTitle.textContent = title ? title.textContent : "Project";
     dialogMeta.textContent = meta ? meta.textContent : "Finished cut";
     dialog.showModal();
+    if (!(history.state && history.state.project)) {
+      history.pushState({ project: true }, "", "#project");
+    }
     dialogVideo.load();
     tryPlay(dialogVideo);
   }
 
   function closeDialog() {
-    if (!dialog) return;
-    pauseVideo(dialogVideo);
+    if (!dialog || !dialog.open) return;
     dialog.close();
   }
 
@@ -260,7 +277,11 @@
     if (needsAnotherFrame) requestTick();
   }
 
-  window.addEventListener("scroll", requestTick, { passive: true });
+  window.addEventListener("scroll", () => {
+    requestTick();
+    primeVisiblePreviews();
+    updateFloatingBack();
+  }, { passive: true });
   window.addEventListener("resize", () => {
     updateRailShift();
     requestTick();
@@ -314,8 +335,17 @@
   if (prevBtn) prevBtn.addEventListener("click", () => moveRail(-1));
   if (nextBtn) nextBtn.addEventListener("click", () => moveRail(1));
   if (closeBtn) closeBtn.addEventListener("click", closeDialog);
+  if (dialogBack) dialogBack.addEventListener("click", closeDialog);
+
+  window.addEventListener("popstate", () => {
+    if (dialog && dialog.open) dialog.close();
+  });
 
   if (dialog) {
+    dialog.addEventListener("close", () => {
+      pauseVideo(dialogVideo);
+      if (history.state && history.state.project) history.back();
+    });
     dialog.addEventListener("click", (event) => {
       const rect = dialog.getBoundingClientRect();
       const inside =
@@ -348,10 +378,10 @@
     const maxScroll = Math.max(0, section.offsetHeight - window.innerHeight);
     const targets = {
       "#reel": 0,
-      "#work": Math.min(maxScroll, 3320),
+      "#work": workDock ? Math.max(0, workDock.offsetTop - 16) : Math.min(maxScroll, 3320),
       "#method": Math.min(maxScroll, 2400),
-      "#contact": maxScroll,
-      "#about": (document.querySelector("#about")?.offsetTop || maxScroll) + 1
+      "#contact": (() => { const about = document.querySelector("#about"); const contact = about?.querySelector(".profile-contact"); return contact ? contact.getBoundingClientRect().top + window.scrollY - 120 : maxScroll; })(),
+      "#about": Math.max(0, (document.querySelector("#about")?.offsetTop || maxScroll) - 16)
     };
     const target = targets[hash];
     if (target === undefined) return false;
@@ -360,6 +390,15 @@
     return true;
   }
 
+  function updateFloatingBack() {
+    const threshold = Math.max(0, section.offsetHeight - window.innerHeight + 180);
+    floatingBack.classList.toggle("is-visible", window.scrollY > threshold);
+  }
+
+  floatingBack.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  });
+
   document.querySelectorAll('.site-nav a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
       if (scrollToHash(link.getAttribute("href"))) event.preventDefault();
@@ -367,10 +406,15 @@
   });
 
   window.addEventListener("load", () => {
+    if (workDock && section.nextElementSibling !== workDock) {
+      workDock.classList.add("work-page");
+      section.insertAdjacentElement("afterend", workDock);
+    }
     setupRail();
     watchPreviews();
     requestTick();
     startBackground();
+    updateFloatingBack();
     if (location.hash) setTimeout(() => scrollToHash(location.hash), 80);
   });
 })();
