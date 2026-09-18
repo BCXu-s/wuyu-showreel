@@ -1263,3 +1263,44 @@ button {
   padding-left: 16px;
   font-weight: 600;
 }
+
+
+/* Complete works section */
+.full-works {
+  padding-top: clamp(70px, 8vw, 120px);
+  padding-bottom: clamp(90px, 10vw, 150px);
+  background:
+    radial-gradient(circle at 8% 10%, rgba(95, 226, 197, 0.12), transparent 30%),
+    #0c100d;
+}
+
+.full-works-heading {
+  width: min(1500px, 100%);
+  margin: 0 auto 42px;
+}
+
+.full-works-heading h2 {
+  margin: 0;
+  color: var(--paper);
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  font-weight: 800;
+  line-height: 0.94;
+}
+
+.full-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.full-work-card .project-media {
+  aspect-ratio: 16 / 10;
+}
+
+@media (max-width: 640px) {
+  .full-works-heading {
+    margin-bottom: 28px;
+  }
+}

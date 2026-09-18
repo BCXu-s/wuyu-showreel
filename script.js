@@ -199,12 +199,14 @@
 
   function openProject(card) {
     const video = card.querySelector(".project-video");
-    const title = card.querySelector(".project-copy h3");
-    const meta = card.querySelector(".project-tag");
-    if (!video || !dialog) return;
-    dialogVideo.src = video.getAttribute("src");
-    dialogTitle.textContent = title ? title.textContent : "Project";
-    dialogMeta.textContent = meta ? meta.textContent : "Finished cut";
+    const source = video ? video.getAttribute("src") : card.dataset.src;
+    if (!source || !dialog) return;
+    const titleNode = card.querySelector(".project-copy h3");
+    const metaNode = card.querySelector(".project-tag");
+    dialogVideo.src = source;
+    dialogVideo.poster = card.dataset.poster || (video ? video.getAttribute("poster") : "") || "";
+    dialogTitle.textContent = titleNode ? titleNode.textContent : (card.dataset.title || "Project");
+    dialogMeta.textContent = metaNode ? metaNode.textContent : (card.dataset.tag || "Full work / 完整作品");
     dialog.showModal();
     if (!(history.state && history.state.project)) {
       history.pushState({ project: true }, "", "#project");
@@ -319,6 +321,41 @@
 
   function primeVisiblePreviews() { if (!railCards.length) return; railCards.forEach((card) => { const rect = card.getBoundingClientRect(); const inView = rect.right > -80 && rect.left < window.innerWidth + 80 && rect.bottom > 0 && rect.top < window.innerHeight; const video = card.querySelector(".project-video"); if (!video) return; if (inView) { tryPlay(video); } else { pauseVideo(video); } }); }
 
+  function renderFullWorks() {
+    const works = Array.isArray(window.FULL_WORKS) ? window.FULL_WORKS : [];
+    if (!works.length || !workDock) return;
+    const sectionEl = document.createElement("section");
+    sectionEl.className = "work-page full-works";
+    sectionEl.id = "full-works";
+    sectionEl.setAttribute("aria-label", "Complete portfolio works");
+    sectionEl.innerHTML = '<div class="full-works-heading"><p class="dock-kicker">Full works / 完整作品</p><h2>完整故事，完整表达。<span class="headline-en">Complete stories, full cuts.</span></h2></div><div class="project-rail full-rail"></div>';
+    const fullRail = sectionEl.querySelector(".full-rail");
+    works.forEach((work) => {
+      const article = document.createElement("article");
+      article.className = "project-card full-work-card";
+      article.tabIndex = 0;
+      article.setAttribute("role", "button");
+      article.setAttribute("aria-label", "Open " + (work.titleEn || work.title || "full work"));
+      article.dataset.src = work.src || "";
+      article.dataset.poster = work.poster || "";
+      article.dataset.title = work.title || "";
+      article.dataset.tag = work.tag || "Full work / 完整作品";
+      article.innerHTML = '<div class="project-media"><img class="full-poster" src="' + (work.poster || "") + '" alt="" loading="lazy" /><span class="project-play" aria-hidden="true"></span><span class="project-duration">' + (work.duration || "FULL") + '</span></div><div class="project-copy"><p class="project-tag">' + (work.tag || "Full work / 完整作品") + '</p><h3>' + (work.title || "Untitled") + '</h3><p>' + (work.description || "") + '<span class="card-en">' + (work.descriptionEn || "") + '</span></p></div>';
+      fullRail.append(article);
+    });
+    workDock.insertAdjacentElement("afterend", sectionEl);
+    sectionEl.addEventListener("click", (event) => {
+      const card = event.target.closest(".project-card");
+      if (card) openProject(card);
+    });
+    sectionEl.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const card = event.target.closest(".project-card");
+      if (!card) return;
+      event.preventDefault();
+      openProject(card);
+    });
+  }
   rail.addEventListener("click", (event) => {
     const card = event.target.closest(".project-card");
     if (card) openProject(card);
@@ -411,6 +448,7 @@
       section.insertAdjacentElement("afterend", workDock);
     }
     setupRail();
+    renderFullWorks();
     watchPreviews();
     requestTick();
     startBackground();
