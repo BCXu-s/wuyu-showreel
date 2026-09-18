@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>徐武垚 - 视频剪辑作品集 | Video Editor Portfolio</title>
+  <meta name="description" content="徐武垚的视频剪辑作品集，包含汽车、活动、户外与商业内容精选。">
+  <meta name="author" content="徐武垚" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="徐武垚 - 视频剪辑作品集" />
+  <meta property="og:description" content="汽车、活动、户外与商业内容精选。" />
+  <meta property="og:image" content="media/work-01-poster.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="16x16" />
+  <meta name="theme-color" content="#0b0d0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="site-shell">
+    <section class="cinema-scroll" id="reel" aria-label="Video editor showreel">
+      <div class="stage">
+        <div class="world">
+
+          <div class="video-stack" id="video-stack" aria-hidden="true">
+            <video class="video-layer layer-a" id="layer-a" muted loop playsinline preload="auto"></video>
+            <video class="video-layer layer-b" id="layer-b" muted loop playsinline preload="auto"></video>
+          </div>
+
+          <header class="site-header" aria-label="Primary navigation">
+            <a class="site-logo" href="#reel">WUYU<span class="logo-dot">.</span></a>
+            <nav class="site-nav" aria-label="Main menu">
+              <a href="#reel">Reel / 作品</a>
+              <a href="#work">Work / 精选</a>
+              <a href="#about">About / 关于</a>
+              <a href="#method">Method / 方法</a>
+              <a href="#contact">Contact / 联系</a>
+            </nav>
+            <a class="availability" href="mailto:1608341441@qq.com">合作联系 / CONTACT</a>
+          </header>
+
+          <div class="stage-grain" aria-hidden="true"></div>
+          <div class="vignette" aria-hidden="true"></div>
+          <div class="edit-chrome" aria-hidden="true">
+            <span class="chrome-rec">REC</span>
+            <span class="chrome-time" id="chrome-time">00:00:00:00</span>
+            <span class="chrome-fps">24 FPS</span>
+          </div>
+
+          <h1 class="hero-title">CUT<span class="title-dot">.</span></h1>
+          <p class="hero-deck">视频剪辑师 · 用节奏与画面把故事剪得更有力量。<span class="bi-en">Editor and motion storyteller focused on clean rhythm and finished frames.</span></p>
+          <p class="scroll-hint">向下滚动进入作品 / SCROLL TO ENTER THE EDIT</p>
+
+          <section class="story-panel panel-story" aria-label="Editing philosophy">
+            <p class="panel-kicker">01 / Story · 故事</p>
+            <h2>剪辑不是拼接素材，<br />而是让情绪真正发生。<span class="headline-en">A cut should move people, not just move footage.</span></h2>
+            <p>我关心每一帧要给观众什么反应：先节奏，再声音，最后用调色把质感收完整。<span class="body-en">Rhythm first, then sound, then the grade that makes it feel finished.</span></p>
+            <dl class="mini-facts">
+              <div>
+                <dt>15s</dt>
+                <dd>短时长也能讲完整一件事<span class="body-en">Rhythm-first edits that keep a full idea</span></dd>
+              </div>
+              <div>
+                <dt>多类型</dt>
+                <dd>汽车、户外、现场活动与本地品牌内容<span class="body-en">Automotive, outdoor, live and local work</span></dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="story-panel panel-method" id="method" aria-label="Method">
+            <p class="panel-kicker">02 / Method · 方法</p>
+            <h2>从素材到成片，<br />每一步都能交付。<span class="headline-en">Built to ship. Built to loop.</span></h2>
+            <p>我把故事、节奏、声音和调色收在同一条流程里：成片、封面、字幕和平台文件一次交付。<span class="body-en">Story, rhythm, sound, grade and a clean handoff.</span></p>
+          </section>
+
+          <section class="work-dock" id="work" aria-label="Selected editing work">
+            <div class="dock-heading">
+              <div>
+                <p class="dock-kicker">精选作品 / SELECTED CUTS</p>
+                <h2>真实项目，干净的成片。<span class="headline-en">Real work, clean screens.</span></h2>
+              </div>
+              <p class="dock-note">悬停预览，点击播放。<span class="body-en">Hover to preview. Click to play.</span></p>
+            </div>
+
+            <div class="project-rail" id="project-rail">
+              
+
+              <article class="project-card" tabindex="0" role="button" aria-label="Open YU7 GT work">
+                <div class="project-media">
+                  <video class="project-video" muted playsinline loop preload="metadata" src="media/work-01.mp4" poster="media/work-01-poster.jpg"></video>
+                  <span class="project-play" aria-hidden="true"></span>
+                  <span class="project-duration">--:--</span>
+                </div>
+                <div class="project-copy">
+                  <p class="project-tag">汽车 / AUTOMOTIVE</p>
+                  <h3>小米 YU7 GT</h3>
+                  <p>节奏紧、速度感强的汽车产品剪辑。<span class="card-en">Fast product edit with rhythm that matches the car.</span></p>
+                </div>
+              </article>
+
+              <article class="project-card" tabindex="0" role="button" aria-label="Open August Cut work">
+                <div class="project-media">
+                  <video class="project-video" muted playsinline loop preload="metadata" src="media/work-02.mp4" poster="media/work-02-poster.jpg"></video>
+                  <span class="project-play" aria-hidden="true"></span>
+                  <span class="project-duration">--:--</span>
+                </div>
+                <div class="project-copy">
+                  <p class="project-tag">活动 / CAMPAIGN</p>
+                  <h3>8月4日</h3>
+                  <p>结构清晰、节奏紧凑的活动宣传剪辑。<span class="card-en">Compact campaign cut with a clear build and quick payoff.</span></p>
+                </div>
+              </article>
+
+              <article class="project-card" tabindex="0" role="button" aria-label="Open Live Skit 198 work">
+                <div class="project-media">
+                  <video class="project-video" muted playsinline loop preload="metadata" src="media/work-03.mp4" poster="media/work-03-poster.jpg"></video>
+                  <span class="project-play" aria-hidden="true"></span>
+                  <span class="project-duration">--:--</span>
+                </div>
+                <div class="project-copy">
+                  <p class="project-tag">现场段子 / LIVE SKIT</p>
+                  <h3>198 段子</h3>
+                  <p>保留现场感染力，用节奏放大笑点。<span class="card-en">Live skit edit with scene energy and comic timing.</span></p>
+                </div>
+              </article>
+
+              <article class="project-card" tabindex="0" role="button" aria-label="Open Signal Fire work">
+                <div class="project-media">
+                  <video class="project-video" muted playsinline loop preload="metadata" src="media/work-04.mp4" poster="media/work-04-poster.jpg"></video>
+                  <span class="project-play" aria-hidden="true"></span>
+                  <span class="project-duration">--:--</span>
+                </div>
+                <div class="project-copy">
+                  <p class="project-tag">夜景影片 / NIGHT FILM</p>
+                  <h3>烽烟起</h3>
+                  <p>围绕篝火、烟雾和夜色营造氛围。<span class="card-en">Night-camp film built around fire, smoke, and atmosphere.</span></p>
+                </div>
+              </article>
+                          <article class="project-card" tabindex="0" role="button" aria-label="Open renovation study">
+                <div class="project-media">
+                  <video class="project-video" muted playsinline loop preload="metadata" src="media/work-05.mp4" poster="media/work-05-poster.jpg"></video>
+                  <span class="project-play" aria-hidden="true"></span>
+                  <span class="project-duration">--:--</span>
+                </div>
+                <div class="project-copy">
+                  <p class="project-tag">空间影像 / RENOVATION</p>
+                  <h3>装修 1</h3>
+                  <p>用镜头运动表现空间结构和装修质感。<span class="card-en">Interior piece with clean movement and spatial rhythm.</span></p>
+                </div>
+              </article>
+</div>
+
+            <div class="rail-controls" aria-label="Project slider controls">
+              <button class="rail-btn rail-prev" type="button" aria-label="Previous project">&#8592;</button>
+              <button class="rail-btn rail-next" type="button" aria-label="Next project">&#8594;</button>
+              <span class="rail-counter" id="rail-counter">01 / 05</span>
+            </div>
+          </section>
+
+          <section class="outro-panel" id="contact" aria-label="Contact">
+            <p class="panel-kicker">05 / Contact · 联系</p>
+            <h2>好故事，值得一个干净的剪辑。<span class="headline-en">Good stories deserve clean edits.</span></h2>
+            <a class="contact-link" href="mailto:1608341441@qq.com">1608341441@qq.com</a>
+          </section>
+
+        </div>
+      </div>
+    </section>
+    <section class="profile" id="about" aria-label="个人介绍">
+      <div class="profile-head">
+        <p class="profile-kicker">About / 关于我</p>
+        <h2>徐武垚</h2>
+        <p class="profile-role">视频剪辑师 · 吾屿传媒工作室<span class="bi-en">Video Editor · Wuyu Media Studio</span></p>
+      </div>
+      <div class="profile-body">
+        <p>2022 年加入吾屿传媒工作室，专注商业短视频与品牌内容制作。擅长从素材中提炼节奏和卖点，把品牌信息变成画面干净、愿意看完的成片。<span class="body-en">Video editor at Wuyu Studio since 2022, focused on commercial short-form and brand content.</span></p>
+        <p>长期服务汽车、户外、酒店、餐饮、房产及本地商家项目，熟练使用 Premiere Pro、剪映专业版和 DaVinci Resolve，可独立完成剪辑、调色、字幕与交付。<span class="body-en">Experienced across automotive, outdoor, hospitality, food, property, and local brand work.</span></p>
+        <dl class="profile-stats">
+          <div><dt>4年+</dt><dd>商业视频剪辑经验<span class="body-en">Commercial editing experience</span></dd></div>
+          <div><dt>15+</dt><dd>每周稳定成片产出<span class="body-en">Finished videos weekly</span></dd></div>
+          <div><dt>95%</dt><dd>项目准时交付率<span class="body-en">On-time delivery rate</span></dd></div>
+          <div><dt>20%+</dt><dd>合作商家平均客流增长<span class="body-en">Average client traffic growth</span></dd></div>
+        </dl>
+        <div class="profile-contact">
+          <span>贵州兴义 · 可远程合作<span class="body-en">Xingyi, Guizhou · Remote-friendly</span></span>
+          <a href="mailto:1608341441@qq.com">1608341441@qq.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="player-dialog" id="player-dialog" aria-label="Project player">
+    <button class="dialog-close" type="button" aria-label="Close player">&#10005;</button>
+    <video class="dialog-video" id="dialog-video" controls playsinline preload="auto"></video>
+    <div class="dialog-note">
+      <p id="dialog-title">Project</p>
+      <p id="dialog-meta">完整成片 / FULL CUT</p>
+    </div>
+  </dialog>
+</body>
+</html>
