@@ -1304,3 +1304,16 @@ button {
     margin-bottom: 28px;
   }
 }
+.full-works-link {
+  display: inline-flex;
+  margin-top: 12px;
+  color: var(--acid);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.full-works-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
